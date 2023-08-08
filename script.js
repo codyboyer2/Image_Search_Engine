@@ -15,7 +15,7 @@ async function searchImages(){
     keyword = searchBox.value;
     const url = `https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${accessKey}&per_page=12`;
 
-    // Fetching of API url
+    // Waits for return of API url and data
     const response = await fetch(url);
     const data = await response.json();
 
@@ -25,11 +25,13 @@ async function searchImages(){
     }
 
     const results = data.results;
-    // Map array of img results and img links
+
+    // Map array created for img results and img links
     results.map((result) =>{
         const image = document.createElement("img");
         image.src = result.urls.small;
         const imageLink = document.createElement("a")
+        // Img link opens new tab
         imageLink.href = result.links.html;
         imageLink.target = "_blank";
 
@@ -48,7 +50,7 @@ searchForm.addEventListener("submit", (e) => {
     searchImages();
 })
 
-// Show more button adds more images to page
+// Show more button adds more images to page by incrementing page number
 showMoreBtn.addEventListener("click", () => {
     page++;
     searchImages();
